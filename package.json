@@ -1,0 +1,23 @@
+{
+  "name": "gridvo-lessee-authentication",
+  "version": "0.0.1",
+  "description": "格物平台——鉴权与认证",
+  "main": "index.js",
+  "scripts": {
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- --recursive"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.5.3",
+    "muk": "^0.5.2",
+    "should": "^9.0.2"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.6",
+    "bearcat": "^0.4.29",
+    "mongodb": "^2.1.18",
+    "underscore": "^1.8.3",
+    "request": "^2.73.0"
+  }
+}

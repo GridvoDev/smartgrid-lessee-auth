@@ -1,0 +1,130 @@
+{
+  "name": "GridvoLATestDI",
+  "scan": "lib",
+  "beans": [
+    {
+      "id": "lesseeService",
+      "func": "lib.application.service.lesseeService",
+      "props": [
+        {
+          "name": "__lesseeRepository__",
+          "ref": "mockLesseeRepository"
+        },
+        {
+          "name": "__stationRepository__",
+          "ref": "mockStationRepository"
+        },
+        {
+          "name": "__memberRepository__",
+          "ref": "mockMemberRepository"
+        }
+      ]
+    },
+    {
+      "id": "roleAndPermissionService",
+      "func": "lib.application.service.roleAndPermissionService",
+      "props": [
+        {
+          "name": "__permissionRepository__",
+          "ref": "mockPermissionRepository"
+        },
+        {
+          "name": "__roleRepository__",
+          "ref": "mockRoleRepository"
+        }
+      ]
+    },
+    {
+      "id": "authService",
+      "func": "lib.application.service.authService",
+      "props": [
+        {
+          "name": "__memberRepository__",
+          "ref": "mockMemberRepository"
+        }
+      ]
+    },
+    {
+      "id": "mockLesseeRepository",
+      "func": "test.mock.infrastructure.repository.lesseeRepository"
+    },
+    {
+      "id": "mockStationRepository",
+      "func": "test.mock.infrastructure.repository.stationRepository"
+    },
+    {
+      "id": "mockMemberRepository",
+      "func": "test.mock.infrastructure.repository.memberRepository"
+    },
+    {
+      "id": "mockRoleRepository",
+      "func": "test.mock.infrastructure.repository.roleRepository"
+    },
+    {
+      "id": "mockPermissionRepository",
+      "func": "test.mock.infrastructure.repository.permissionRepository"
+    },
+    {
+      "id": "lesseeRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpLesseeRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        }
+      ]
+    },
+    {
+      "id": "stationRepository",
+      "func": "lib.infrastructure.repository.mongodbStationRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        }
+      ]
+    },
+    {
+      "id": "memberRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpMemberRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        },
+        {
+          "name": "httpUrl",
+          "value": "http://?user_id=${memberID}"
+        },
+        {
+          "name": "__roleRepository__",
+          "ref": "mockRoleRepository"
+        }
+      ]
+    },
+    {
+      "id": "roleRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpRoleRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        },
+        {
+          "name": "__permissionRepository__",
+          "ref": "mockPermissionRepository"
+        }
+      ]
+    },
+    {
+      "id": "permissionRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpPermissionRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        }
+      ]
+    }
+  ]
+}
