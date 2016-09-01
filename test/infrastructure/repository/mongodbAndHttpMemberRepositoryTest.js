@@ -9,7 +9,7 @@ var muk = require('muk');
 
 describe('member repository MongoDB and http use case test', function () {
     var repository;
-    
+
     before(function () {
         var contextPath = require.resolve('../../../testbcontext.json');
         bearcat.createApp([contextPath]);
@@ -50,7 +50,7 @@ describe('member repository MongoDB and http use case test', function () {
                 var memberID = "memberID";
                 repository.getMemberByID(memberID, function (err, member) {
                     member.memberID.should.be.eql("userID");
-                    member.memberInfo.name.should.be.eql("username");
+                    member.memberInfo.memberName.should.be.eql("username");
                     member.lesseeID.should.be.eql("corpID");
                     member.roles.length.should.be.eql(2);
                     member.state.should.be.eql("follow");
@@ -62,34 +62,6 @@ describe('member repository MongoDB and http use case test', function () {
             });
         });
     });
-    // describe('#checkPermission(memberID, permissionID, callback)//callback(err,isSuccess)', function () {
-    //     context('check permissions by memberID and permissionID', function () {
-    //         it('should return false if no this memberID', function (done) {
-    //             var memberID = "noMemberID";
-    //             var permissionID = "permissionID";
-    //             repository.checkPermission(memberID, permissionID, function (err, isSuccess) {
-    //                 isSuccess.should.be.eql(false);
-    //                 done();
-    //             });
-    //         });
-    //         it('should return false if no this permissionID', function (done) {
-    //             var memberID = "memberID";
-    //             var permissionID = "noPermissionID";
-    //             repository.checkPermission(memberID, permissionID, function (err, isSuccess) {
-    //                 isSuccess.should.be.eql(false);
-    //                 done();
-    //             });
-    //         });
-    //         it('should return true if success', function (done) {
-    //             var memberID = "memberID";
-    //             var permissionID = "permissionID";
-    //             repository.checkPermission(memberID, permissionID, function (err, isSuccess) {
-    //                 isSuccess.should.be.eql(true);
-    //                 done();
-    //             });
-    //         });
-    //     });
-    // });
     after(function (done) {
         MongoClient.connect("mongodb://localhost:27017/TestGLesseeAuthentication", function (err, db) {
             if (err) {

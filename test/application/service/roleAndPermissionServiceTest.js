@@ -34,7 +34,7 @@ describe('roleAndPermission service use case test', function () {
             it('success', function (done) {
                 var permissionData = {};
                 permissionData.permissionID = "permissionID";
-                permissionData.name = "permissionName";
+                permissionData.permissionName = "permissionName";
                 service.registerPermission(permissionData, function (err, permissionID) {
                     permissionID.should.be.eql("permissionID");
                     done();

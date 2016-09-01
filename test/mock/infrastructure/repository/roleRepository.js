@@ -23,7 +23,11 @@ Repository.prototype.getRolesByIDs = function (roleIDs, callback) {
     for (var roleID of roleIDs) {
         var role = {};
         role.roleID = roleID;
-        role.permissions = ["permissionID"];
+        role.roleName = "roleName";
+        role.permissions =  [{
+            permissionID: "permissionID",
+            permissionName: "permissionName"
+        }];
         role = new Role(role);
         roles.push(role);
     }

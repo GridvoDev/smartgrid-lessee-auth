@@ -22,6 +22,7 @@ describe('role repository MongoDB and http use case test', function () {
             it('should return true if save success', function (done) {
                 var role = {};
                 role.roleID = "tagID1";
+                role.roleName = "tagName1";
                 role.permissions = [{
                     permissionID: "permissionID",
                     permissionName: "permissionName"
@@ -52,7 +53,7 @@ describe('role repository MongoDB and http use case test', function () {
             });
         });
     });
-    describe('#getRolesByIDs(roleIDs, callback)//callback(err,role)', function () {
+    describe('#getRolesByIDs(roleIDs, callback)//callback(err,roles)', function () {
         context('get roles by ids', function () {
             it('should return null if roles is null', function (done) {
                 var roleIDs = null;

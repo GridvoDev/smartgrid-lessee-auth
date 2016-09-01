@@ -1,6 +1,7 @@
 'use strict';
 
 var Station = require('../../../../lib/domain/lesseeAndMember/station.js');
+var StationInfo = require('../../../../lib/domain/lesseeAndMember/stationInfo.js');
 
 function Repository() {
 }
@@ -30,8 +31,7 @@ Repository.prototype.getStation = function (stationID, callback) {
     }
     var station = {};
     station.stationID = stationID;
-    station.stationInfo = {};
-    station.stationInfo.name = "the station";
+    station.stationInfo = new StationInfo({stationName: "stationName"});
     station.lesseeID = "lesseeID";
     station = new Station(station);
     callback(null, station);
@@ -44,8 +44,7 @@ Repository.prototype.getAllStationsByMemberID = function (memberID, callback) {
     var stations = [];
     var station = {};
     station.stationID = "stationID";
-    station.stationInfo = {};
-    station.stationInfo.name = "the station";
+    station.stationInfo = new StationInfo({stationName: "stationName"});
     station.lesseeID = "lesseeID";
     station = new Station(station);
     stations.push(station);

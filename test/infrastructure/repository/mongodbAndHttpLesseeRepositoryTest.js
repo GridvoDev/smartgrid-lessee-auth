@@ -5,6 +5,7 @@ var MongoClient = require('mongodb').MongoClient;
 var bearcat = require('bearcat');
 var should = require('should');
 var Lessee = require('../../../lib/domain/lesseeAndMember/lessee.js');
+var LesseeInfo = require('../../../lib/domain/lesseeAndMember/lesseeInfo.js');
 
 describe('lessee repository MongoDB and http use case test', function () {
     var repository;
@@ -19,9 +20,10 @@ describe('lessee repository MongoDB and http use case test', function () {
     describe('#saveLessee(lessee,callback)//callback(err,isSuccess)', function () {
         context('save a lessee', function () {
             it('should return true if save success', function (done) {
+                var lesseeInfo = new LesseeInfo({ lesseeName: "lesseeName" });
                 var lessee = new Lessee({
                     lesseeID: "lesseeID",
-                    lesseeInfo: { name: "the lessee name" },
+                    lesseeInfo : lesseeInfo,
                     isActived: true
                 });
                 repository.saveLessee(lessee, function (err, isSuccess) {

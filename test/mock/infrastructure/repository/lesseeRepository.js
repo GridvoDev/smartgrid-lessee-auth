@@ -1,6 +1,7 @@
 'use strict';
 
 var Lessee = require('../../../../lib/domain/lesseeAndMember/lessee.js');
+var LesseeInfo = require('../../../../lib/domain/lesseeAndMember/lesseeInfo.js');
 
 function Repository() {
 }
@@ -15,8 +16,7 @@ Repository.prototype.getLesseeByID = function (lesseeID, callback) {
     }
     var lessee = {};
     lessee.lesseeID = lesseeID;
-    lessee.lesseeInfo = {};
-    lessee.lesseeInfo.name = "the lessee";
+    lessee.lesseeInfo = new LesseeInfo({lesseeName: "lesseeName"});
     lessee = new Lessee(lessee);
     callback(null, lessee);
 };

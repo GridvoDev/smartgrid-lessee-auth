@@ -1,6 +1,7 @@
 'use strict';
 
 var Member = require('../../../../lib/domain/lesseeAndMember/member.js');
+var MemberInfo = require('../../../../lib/domain/lesseeAndMember/memberInfo.js');
 
 function Repository() {
 }
@@ -12,26 +13,18 @@ Repository.prototype.getMemberByID = function (memberID, callback) {
     }
     var member = {};
     member.memberID = "memberID";
-    member.memberInfo = {};
-    member.memberInfo.name = "the member";
+    member.memberInfo = new MemberInfo({memberName: "memberName"});
     member.lesseeID = "lesseeID";
     member.roles = [{
         roleID: "roleID",
-        permissions: ["permissionID"]
+        roleName: "roleName",
+        permissions: [{
+            permissionID: "permissionID",
+            permissionName: "permissionName"
+        }]
     }];
     member = new Member(member);
     callback(null, member);
-};
-Repository.prototype.checkPermission = function (memberID, permissionID, callback) {
-    if (memberID == "noMemberID") {
-        callback(null, false);
-        return;
-    }
-    if (permissionID == "noPermissionID") {
-        callback(null, false);
-        return;
-    }
-    callback(null, true);
 };
 
 module.exports = Repository;

@@ -5,6 +5,7 @@ var bearcat = require('bearcat');
 var _ = require('underscore');
 var should = require('should');
 var Station = require('../../../lib/domain/lesseeAndMember/station');
+var StationInfo = require('../../../lib/domain/lesseeAndMember/stationInfo');
 
 describe('station repository MongoDB use case test', function () {
     var repository;
@@ -20,8 +21,7 @@ describe('station repository MongoDB use case test', function () {
             it('should return true if save success', function (done) {
                 var station = {};
                 station.stationID = "stationID";
-                station.stationInfo = {};
-                station.stationInfo.name = "stationName";
+                station.stationInfo = new StationInfo({stationName: "stationName"});
                 station.lesseeID = "lesseeID";
                 station.members = ["memberID","memberID2"];
                 station = new Station(station);
@@ -45,7 +45,7 @@ describe('station repository MongoDB use case test', function () {
                 var stationID = "stationID";
                 repository.getStationByID(stationID, function (err, station) {
                     station.stationID.should.be.eql('stationID');
-                    station.stationInfo.name.should.be.eql('stationName');
+                    station.stationInfo.stationName.should.be.eql('stationName');
                     station.lesseeID.should.be.eql('lesseeID');
                     station.members.should.be.eql(["memberID","memberID2"]);
                     done();

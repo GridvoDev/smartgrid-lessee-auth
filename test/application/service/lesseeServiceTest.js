@@ -6,7 +6,7 @@ var muk = require('muk');
 
 describe('lessee service use case test', function () {
     var service;
-    
+
     before(function () {
         var contextPath = require.resolve('../../../testbcontext.json');
         bearcat.createApp([contextPath]);
@@ -34,7 +34,7 @@ describe('lessee service use case test', function () {
             it('success', function (done) {
                 var lesseeData = {};
                 lesseeData.lesseeID = "lesseeID";
-                lesseeData.name = "my lessee";
+                lesseeData.lesseeName = "lesseeName";
                 service.registerLessee(lesseeData, function (err, isSuccess) {
                     isSuccess.should.be.eql(true);
                     done();
@@ -74,7 +74,7 @@ describe('lessee service use case test', function () {
                 var lesseeID = "noLesseeID";
                 var stationData = {};
                 stationData.stationID = "stationID";
-                stationData.name = "station";
+                stationData.stationName = "stationName";
                 service.addStationToLessee(lesseeID, stationData, function (err, stationID) {
                     _.isNull(stationID).should.be.eql(true);
                     done();
@@ -92,7 +92,7 @@ describe('lessee service use case test', function () {
                 var lesseeID = "lesseeID";
                 var stationData = {};
                 stationData.stationID = "stationID";
-                stationData.name = "station";
+                stationData.stationName = "stationName";
                 service.addStationToLessee(lesseeID, stationData, function (err, stationID) {
                     stationID.should.be.eql("stationID");
                     done();
@@ -168,7 +168,7 @@ describe('lessee service use case test', function () {
             it('success', function (done) {
                 var memberID = "memberID";
                 service.obtainMemberDutyStations(memberID, function (err, stationDatas) {
-                    stationDatas.should.be.eql([{stationID: "stationID", stationName: "the station"}]);
+                    stationDatas.should.be.eql([{stationID: "stationID", stationName: "stationName"}]);
                     done();
                 });
             });
