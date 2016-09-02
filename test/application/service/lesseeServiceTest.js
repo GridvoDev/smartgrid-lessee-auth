@@ -6,7 +6,6 @@ var muk = require('muk');
 
 describe('lessee service use case test', function () {
     var service;
-
     before(function () {
         var contextPath = require.resolve('../../../testbcontext.json');
         bearcat.createApp([contextPath]);

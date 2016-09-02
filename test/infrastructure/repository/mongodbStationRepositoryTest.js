@@ -23,7 +23,7 @@ describe('station repository MongoDB use case test', function () {
                 station.stationID = "stationID";
                 station.stationInfo = new StationInfo({stationName: "stationName"});
                 station.lesseeID = "lesseeID";
-                station.members = ["memberID","memberID2"];
+                station.members = ["memberID", "memberID2"];
                 station = new Station(station);
                 repository.saveStation(station, function (err, isSuccess) {
                     isSuccess.should.be.eql(true);
@@ -47,7 +47,7 @@ describe('station repository MongoDB use case test', function () {
                     station.stationID.should.be.eql('stationID');
                     station.stationInfo.stationName.should.be.eql('stationName');
                     station.lesseeID.should.be.eql('lesseeID');
-                    station.members.should.be.eql(["memberID","memberID2"]);
+                    station.members.should.be.eql(["memberID", "memberID2"]);
                     done();
                 });
             });
@@ -76,13 +76,14 @@ describe('station repository MongoDB use case test', function () {
                 station1.stationInfo = {};
                 station1.stationInfo.name = "stationName";
                 station1.lesseeID = "lesseeID1";
-                station1.members = ["memberID","memberID3"];
+                station1.members = ["memberID", "memberID3"];
                 station1 = new Station(station1);
-                repository.saveStation(station1, function () {});
-                var memberID = "memberID";
-                repository.getAllStationsByMemberID(memberID, function (err, stations) {
-                    stations.length.should.be.eql(2);
-                    done();
+                repository.saveStation(station1, function () {
+                    var memberID = "memberID";
+                    repository.getAllStationsByMemberID(memberID, function (err, stations) {
+                        stations.length.should.be.eql(2);
+                        done();
+                    });
                 });
             });
         });

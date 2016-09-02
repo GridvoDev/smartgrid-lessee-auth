@@ -20,10 +20,10 @@ describe('lessee repository MongoDB and http use case test', function () {
     describe('#saveLessee(lessee,callback)//callback(err,isSuccess)', function () {
         context('save a lessee', function () {
             it('should return true if save success', function (done) {
-                var lesseeInfo = new LesseeInfo({ lesseeName: "lesseeName" });
+                var lesseeInfo = new LesseeInfo({lesseeName: "lesseeName"});
                 var lessee = new Lessee({
                     lesseeID: "lesseeID",
-                    lesseeInfo : lesseeInfo,
+                    lesseeInfo: lesseeInfo,
                     isActived: true
                 });
                 repository.saveLessee(lessee, function (err, isSuccess) {

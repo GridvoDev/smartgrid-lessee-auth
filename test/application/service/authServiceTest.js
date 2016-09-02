@@ -5,7 +5,6 @@ var should = require('should');
 
 describe('auth service use case test', function () {
     var service;
-
     before(function () {
         var contextPath = require.resolve('../../../testbcontext.json');
         bearcat.createApp([contextPath]);
