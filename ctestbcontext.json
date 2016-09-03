@@ -1,0 +1,16 @@
+{
+  "name": "GridvoLACTestDI",
+  "scan": "lib",
+  "beans": [
+    {
+      "id": "lesseeRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpLesseeRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        }
+      ]
+    }
+  ]
+}

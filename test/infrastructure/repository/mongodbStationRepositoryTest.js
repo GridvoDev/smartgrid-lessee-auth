@@ -9,11 +9,12 @@ var StationInfo = require('../../../lib/domain/lesseeAndMember/stationInfo');
 
 describe('station repository MongoDB use case test', function () {
     var repository;
-    before(function () {
+    before(function (done) {
         var contextPath = require.resolve('../../../testbcontext.json');
         bearcat.createApp([contextPath]);
         bearcat.start(function () {
             repository = bearcat.getBean('stationRepository');
+            done();
         });
     });
     describe('#saveStation(station, callback)//callback(err,isSuccess)', function () {
@@ -109,6 +110,7 @@ describe('station repository MongoDB use case test', function () {
     after(function (done) {
         MongoClient.connect("mongodb://localhost:27017/TestGLesseeAuthentication", function (err, db) {
             if (err) {
+                done(err);
                 return;
             }
             db.collection('station').drop(function (err, response) {

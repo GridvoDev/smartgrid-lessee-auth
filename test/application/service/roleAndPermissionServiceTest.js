@@ -7,11 +7,12 @@ var muk = require('muk');
 describe('roleAndPermission service use case test', function () {
     var service;
 
-    before(function () {
+    before(function (done) {
         var contextPath = require.resolve('../../../testbcontext.json');
         bearcat.createApp([contextPath]);
         bearcat.start(function () {
             service = bearcat.getBean('roleAndPermissionService');
+            done();
         });
     });
     describe('#registerPermission(permissionData,callback)//callback(err,permissionID)', function () {

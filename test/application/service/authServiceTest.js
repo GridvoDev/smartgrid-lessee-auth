@@ -5,11 +5,12 @@ var should = require('should');
 
 describe('auth service use case test', function () {
     var service;
-    before(function () {
+    before(function (done) {
         var contextPath = require.resolve('../../../testbcontext.json');
         bearcat.createApp([contextPath]);
         bearcat.start(function () {
             service = bearcat.getBean('authService');
+            done();
         });
     });
     describe('#checkMemberPermission(memberID, permissionID, callback)//callback(err,isSuccess)', function () {

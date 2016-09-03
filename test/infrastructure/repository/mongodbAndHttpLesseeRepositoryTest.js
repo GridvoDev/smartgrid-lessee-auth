@@ -10,11 +10,12 @@ var LesseeInfo = require('../../../lib/domain/lesseeAndMember/lesseeInfo.js');
 describe('lessee repository MongoDB and http use case test', function () {
     var repository;
 
-    before(function () {
+    before(function (done) {
         var contextPath = require.resolve('../../../testbcontext.json');
         bearcat.createApp([contextPath]);
-        bearcat.start(function () {
+        bearcat.start(function () {//TODO 1、bearcat.stop？？？ 2、lesseeInfo应该从微信来，这个还没改过来！
             repository = bearcat.getBean('lesseeRepository');
+            done();
         });
     });
     describe('#saveLessee(lessee,callback)//callback(err,isSuccess)', function () {
@@ -56,6 +57,7 @@ describe('lessee repository MongoDB and http use case test', function () {
     after(function (done) {
         MongoClient.connect("mongodb://localhost:27017/TestGLesseeAuthentication", function (err, db) {
             if (err) {
+                done(err);
                 return;
             }
             db.collection('lessee').drop(function (err, response) {

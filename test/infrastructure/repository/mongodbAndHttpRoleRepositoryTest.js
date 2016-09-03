@@ -10,11 +10,12 @@ var muk = require('muk');
 describe('role repository MongoDB and http use case test', function () {
     var repository;
 
-    before(function () {
+    before(function (done) {
         var contextPath = require.resolve('../../../testbcontext.json');
         bearcat.createApp([contextPath]);
         bearcat.start(function () {
             repository = bearcat.getBean('roleRepository');
+            done();
         });
     });
     describe('#saveRole(role, callback)//callback(err,isSuccess)', function () {
@@ -84,6 +85,7 @@ describe('role repository MongoDB and http use case test', function () {
     after(function (done) {
         MongoClient.connect("mongodb://localhost:27017/TestGLesseeAuthentication", function (err, db) {
             if (err) {
+                done(err);
                 return;
             }
             db.collection('role').drop(function (err, response) {

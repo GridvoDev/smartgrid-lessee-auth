@@ -1,34 +1,86 @@
 {
-  "name": "GridvoLATestDI",
+  "name": "GridvoLADI",
   "scan": "lib",
   "beans": [
-//    {
-//      "id": "sampleOneService",
-//      "func": "lib.application.service.sampleOne"
-//    },
-//    {
-//      "id": "sampleTwoService",
-//      "func": "lib.application.service.sampleTwo",
-//      "props": [
-//        {
-//          "name": "__samplePropertyOneRepository__",
-//          "ref": "samplePropertyOneRepository"
-//        },
-//        {
-//          "name": "__samplePropertyTwo__",
-//          "ref": "sampleServiceIdentifier"
-//        }
-//      ]
-//    },
-//    {
-//      "id": "sampleThreeRepository",
-//      "func": "lib.application.repository.sampleThreeRepositoryMongoDB",
-//      "props": [
-//        {
-//          "name": "dBUrl",
-//          "value": "mongodb://10.0.2.16:27017/LesseeAuthentication"
-//        }
-//      ]
-//    }
+    {
+      "id": "lesseeService",
+      "func": "lib.application.service.lesseeService",
+      "props": [
+        {
+          "name": "__lesseeRepository__",
+          "ref": "lesseeRepository"
+        },
+        {
+          "name": "__stationRepository__",
+          "ref": "stationRepository"
+        },
+        {
+          "name": "__memberRepository__",
+          "ref": "memberRepository"
+        }
+      ]
+    },
+    {
+      "id": "lesseeRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpLesseeRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        }
+      ]
+    },
+    {
+      "id": "stationRepository",
+      "func": "lib.infrastructure.repository.mongodbStationRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        }
+      ]
+    },
+    {
+      "id": "memberRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpMemberRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        },
+        {
+          "name": "httpUrl",
+          "value": "http://?user_id=${memberID}"
+        },
+        {
+          "name": "__roleRepository__",
+          "ref": "roleRepository"
+        }
+      ]
+    },
+    {
+      "id": "roleRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpRoleRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        },
+        {
+          "name": "__permissionRepository__",
+          "ref": "permissionRepository"
+        }
+      ]
+    },
+    {
+      "id": "permissionRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpPermissionRepository",
+      "props": [
+        {
+          "name": "dBUrl",
+          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
+        }
+      ]
+    }
   ]
 }
