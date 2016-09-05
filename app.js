@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //路由注册
-app.use('/lessee-auth-service', lessee);
+app.use('/', lessee);
 
 
 app.listen(3000, function () {

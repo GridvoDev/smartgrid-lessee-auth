@@ -7,6 +7,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var lessee = require('../../../lib/express/routes/lessee.js');
+var errCodeTable = require('../../../lib/util/errCode.js');
 
 describe('lessees route use case test', function () {
     var app;
@@ -18,7 +19,7 @@ describe('lessees route use case test', function () {
                 app = express();
                 app.use(bodyParser.json());
                 app.use(bodyParser.urlencoded({ extended: false }));
-                app.use('/lessee-auth-service', lessee);
+                app.use('/', lessee);
                 server = app.listen(3001, callback);
             },
             function (callback) {
@@ -37,7 +38,7 @@ describe('lessees route use case test', function () {
             done();
         });
     });
-    describe('#post:/lessee-auth-service/lessees/:lesseeID/stations\n' +
+    describe('#post:/lessees/:lesseeID/stations\n' +
         'input:{stationID:"",stationName:""}\n' +
         'output:{errcode:0,errmsg:"",stationID:""}', function () {
         context('request for adding a station to the lessee', function () {
@@ -48,11 +49,11 @@ describe('lessees route use case test', function () {
                 lessee = new Lessee(lessee);
                 repository.saveLessee(lessee, done);
             });
-            it('should response message with errcode:400 if post body is illegal', function (done) {
+            it('should response message with errcode:FAIL if post body is illegal', function (done) {
                 var lesseeID = "lesseeID";
                 var body = {};
                 request(server)
-                    .post(`/lessee-auth-service/lessees/${lesseeID}/stations`)
+                    .post(`/lessees/${lesseeID}/stations`)
                     .send(body)
                     .expect(200)
                     .expect('Content-Type', /json/)
@@ -61,18 +62,18 @@ describe('lessees route use case test', function () {
                             done(err);
                             return;
                         }
-                        res.body.errcode.should.be.eql(400);
+                        res.body.errcode.should.be.eql(errCodeTable.FAIL.errCode);
                         done();
                     });
             });
-            it('should response message with errcode:400 if no a such lessee', function (done) {
+            it('should response message with errcode:FAIL if no a such lessee', function (done) {
                 var lesseeID = "noLesseeID";
                 var body = {
                     stationID: "stationID",
                     stationName: "stationName"
                 };
                 request(server)
-                    .post(`/lessee-auth-service/lessees/${lesseeID}/stations`)
+                    .post(`/lessees/${lesseeID}/stations`)
                     .send(body)
                     .expect(200)
                     .expect('Content-Type', /json/)
@@ -81,18 +82,18 @@ describe('lessees route use case test', function () {
                             done(err);
                             return;
                         }
-                        res.body.errcode.should.be.eql(400);
+                        res.body.errcode.should.be.eql(errCodeTable.FAIL.errCode);
                         done();
                     });
             });
-            it('should response message with errcode:200 and stationID if success', function (done) {
+            it('should response message with errcode:OK and stationID if success', function (done) {
                 var lesseeID = "lesseeID";
                 var body = {
                     stationID: "stationID",
                     stationName: "stationName"
                 };
                 request(server)
-                    .post(`/lessee-auth-service/lessees/${lesseeID}/stations`)
+                    .post(`/lessees/${lesseeID}/stations`)
                     .send(body)
                     .expect(200)
                     .expect('Content-Type', /json/)
@@ -101,24 +102,11 @@ describe('lessees route use case test', function () {
                             done(err);
                             return;
                         }
-                        res.body.errcode.should.be.eql(200);
+                        res.body.errcode.should.be.eql(errCodeTable.OK.errCode);
                         res.body.stationID.should.be.eql("stationID");
                         done();
                     });
             });
-            // after(function (done) {
-            //     MongoClient.connect("mongodb://localhost:27017/TestGLesseeAuthentication", function (err, db) {
-            //         if (err) {
-            //             done(err);
-            //             return;
-            //         }
-            //         console.log(2222);
-            //         db.collection('lessee').drop(function (err, response) {
-            //             db.close();
-            //             done();
-            //         });
-            //     });
-            // });
         });
     });
     after(function (done) {
@@ -131,7 +119,6 @@ describe('lessees route use case test', function () {
                 async.waterfall([
                     function (cb) {
                         MongoClient.connect("mongodb://localhost:27017/TestGLesseeAuthentication", cb);
-                        console.log(1111);
                     },
                     function (db, cb) {
                         dbTemp = db;
