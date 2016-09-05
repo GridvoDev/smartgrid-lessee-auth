@@ -3,9 +3,10 @@ var bearcat = require('bearcat');
 var bearcatContextPath = require.resolve("../../../ctestbcontext.json");
 
 function Factory() {
+    var self = this;
     bearcat.createApp([bearcatContextPath]);
     bearcat.start(function () {
-        this.__lesseeService__ = bearcat.getBean('lesseeService');
+        self.__lesseeService__ = bearcat.getBean('lesseeService');
     });
 }
 

@@ -18,7 +18,6 @@ describe('lessees route use case test', function () {
             function (callback) {
                 app = express();
                 app.use(bodyParser.json());
-                console.log(11111);
                 app.use(bodyParser.urlencoded({ extended: false }));
                 app.set("serviceFactory", require('../util/serviceFactory.js')());
                 app.use('/', lesseeRouter);
