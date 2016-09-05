@@ -1,6 +1,6 @@
 'use strict';
 var bearcat = require('bearcat');
-var bearcatContextPath = require.resolve('../../bcontext.json');
+var bearcatContextPath = require.resolve("../../../ctestbcontext.json");
 
 function Factory() {
     bearcat.createApp([bearcatContextPath]);

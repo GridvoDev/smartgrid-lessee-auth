@@ -6,20 +6,22 @@ var request = require('supertest');
 var express = require('express');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
-var lessee = require('../../../lib/express/routes/lessee.js');
+var lesseeRouter = require('../../../lib/express/routes/lessee.js');
 var errCodeTable = require('../../../lib/util/errCode.js');
 
 describe('lessees route use case test', function () {
     var app;
     var server;
-    var repository;
+    var repository;//TODO
     before(function (done) {
         async.parallel([
             function (callback) {
                 app = express();
                 app.use(bodyParser.json());
+                console.log(11111);
                 app.use(bodyParser.urlencoded({ extended: false }));
-                app.use('/', lessee);
+                app.set("serviceFactory", require('../util/serviceFactory.js')());
+                app.use('/', lesseeRouter);
                 server = app.listen(3001, callback);
             },
             function (callback) {
