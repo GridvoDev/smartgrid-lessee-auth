@@ -15,6 +15,4 @@ Factory.prototype.createLesseeService = function () {
 };
 
 
-module.exports = function () {
-    return new Factory();
-};
+module.exports = new Factory();

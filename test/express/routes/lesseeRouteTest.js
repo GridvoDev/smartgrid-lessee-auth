@@ -19,7 +19,7 @@ describe('lessees route use case test', function () {
                 app = express();
                 app.use(bodyParser.json());
                 app.use(bodyParser.urlencoded({ extended: false }));
-                app.set("serviceFactory", require('../util/serviceFactory.js')());
+                app.set("serviceFactory", require('../util/serviceFactory.js'));
                 app.use('/', lesseeRouter);
                 server = app.listen(3001, callback);
             },
