@@ -12,22 +12,20 @@ var errCodeTable = require('../../../lib/util/errCode.js');
 describe('lessees route use case test', function () {
     var app;
     var server;
-    var repository;//TODO
     before(function (done) {
         async.parallel([
             function (callback) {
                 app = express();
                 app.use(bodyParser.json());
                 app.use(bodyParser.urlencoded({ extended: false }));
-                app.set("serviceFactory", require('../util/serviceFactory.js'));
                 app.use('/', lesseeRouter);
                 server = app.listen(3001, callback);
             },
             function (callback) {
-                var contextPath = require.resolve('../../../ctestbcontext.json');
-                bearcat.createApp([contextPath]);
+                var bearcatContextPath = require.resolve("../../../ctestbcontext.json");
+                bearcat.createApp([bearcatContextPath]);
                 bearcat.start(function () {
-                    repository = bearcat.getBean('lesseeRepository');
+                    app.set('bearcat', bearcat);
                     callback(null, null);
                 });
             }
@@ -39,17 +37,52 @@ describe('lessees route use case test', function () {
             done();
         });
     });
+    describe('#post:/lessees\n' +
+        'input:{lesseeID:"",lesseeName:""}\n' +
+        'output:{errcode:0,errmsg:"",isSuccess:""}', function () {
+        context('request for register a lessee', function () {
+            it('should response message with errcode:FAIL if post body is illegal', function (done) {
+                var body = {};
+                request(server)
+                    .post(`/lessees`)
+                    .send(body)
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+                        res.body.errcode.should.be.eql(errCodeTable.FAIL.errCode);
+                        done();
+                    });
+            });
+            it('should response message with errcode:OK and isSuccess:true if success', function (done) {
+                var body = {
+                    lesseeID: "lesseeID",
+                    lesseeName: "lesseeName"
+                };
+                request(server)
+                    .post(`/lessees`)
+                    .send(body)
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+                        res.body.errcode.should.be.eql(errCodeTable.OK.errCode);
+                        res.body.isSuccess.should.be.eql(true);
+                        done();
+                    });
+            });
+        });
+    });
     describe('#post:/lessees/:lesseeID/stations\n' +
         'input:{stationID:"",stationName:""}\n' +
         'output:{errcode:0,errmsg:"",stationID:""}', function () {
         context('request for adding a station to the lessee', function () {
-            before(function (done) {
-                var lessee = {};
-                var Lessee = require('../../../lib/domain/lesseeAndMember/lessee.js');
-                lessee.lesseeID = "lesseeID";
-                lessee = new Lessee(lessee);
-                repository.saveLessee(lessee, done);
-            });
             it('should response message with errcode:FAIL if post body is illegal', function (done) {
                 var lesseeID = "lesseeID";
                 var body = {};
