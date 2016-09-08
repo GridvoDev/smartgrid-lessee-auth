@@ -24,7 +24,11 @@ Repository.prototype.delStation = function (lesseeID, stationID, callback) {
     }
     callback(null, true);
 };
-Repository.prototype.getStation = function (stationID, callback) {
+Repository.prototype.getStationByID = function (lesseeID, stationID, callback) {
+    if (lesseeID == "noLesseeID") {
+        callback(null, null);
+        return;
+    }
     if (stationID == "noStationID") {
         callback(null, null);
         return;

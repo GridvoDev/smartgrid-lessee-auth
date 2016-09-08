@@ -110,7 +110,7 @@ describe('lessee service use case test', function () {
                     done();
                 });
             });
-            it('fail if no stationID', function (done) {
+            it('fail if no exits such station', function (done) {
                 var lesseeID = "lesseeID";
                 var stationID = "noStationID";
                 service.delStationFromLessee(lesseeID, stationID, function (err, isSuccess) {
@@ -128,28 +128,40 @@ describe('lessee service use case test', function () {
             });
         });
     });
-    describe('#assignMemberToLesseeStation(stationID,memberID,callback)//callback(err,isSuccess)', function () {
+    describe('#assignMemberToLesseeStation(lesseeID, stationID,memberID,callback)//callback(err,isSuccess)', function () {
         context('assign member to one station', function () {
+            it('fail if no exits such lessee', function (done) {
+                var lesseeID = "noLesseeID";
+                var stationID = "stationID";
+                var memberID = "memberID";
+                service.assignMemberToLesseeStation(lesseeID, stationID, memberID, function (err, isSuccess) {
+                    isSuccess.should.be.eql(false);
+                    done();
+                });
+            });
             it('fail if no exits such station', function (done) {
+                var lesseeID = "lesseeID";
                 var stationID = "noStationID";
                 var memberID = "memberID";
-                service.assignMemberToLesseeStation(stationID, memberID, function (err, isSuccess) {
+                service.assignMemberToLesseeStation(lesseeID, stationID, memberID, function (err, isSuccess) {
                     isSuccess.should.be.eql(false);
                     done();
                 });
             });
             it('fail if no exits such member', function (done) {
+                var lesseeID = "lesseeID";
                 var stationID = "stationID";
                 var memberID = "noMemberID";
-                service.assignMemberToLesseeStation(stationID, memberID, function (err, isSuccess) {
+                service.assignMemberToLesseeStation(lesseeID, stationID, memberID, function (err, isSuccess) {
                     isSuccess.should.be.eql(false);
                     done();
                 });
             });
             it('success', function (done) {
+                var lesseeID = "lesseeID";
                 var stationID = "stationID";
                 var memberID = "memberID";
-                service.assignMemberToLesseeStation(stationID, memberID, function (err, isSuccess) {
+                service.assignMemberToLesseeStation(lesseeID, stationID, memberID, function (err, isSuccess) {
                     isSuccess.should.be.eql(true);
                     done();
                 });

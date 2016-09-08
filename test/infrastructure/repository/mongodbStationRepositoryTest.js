@@ -33,18 +33,28 @@ describe('station repository MongoDB use case test', function () {
             });
         });
     });
-    describe('#getStationByID(stationID, callback)//callback(err,station)', function () {
+    describe('#getStationByID(lesseeID, stationID, callback)//callback(err,station)', function () {
         context('get an station for id', function () {
-            it('should return null if no this station', function (done) {
-                var stationID = "noStation";
-                repository.getStationByID(stationID, function (err, station) {
+            it('should return null if no this lessee', function (done) {
+                var lesseeID = "noLesseeID";
+                var stationID = "stationID";
+                repository.getStationByID(lesseeID, stationID, function (err, station) {
                     _.isNull(station).should.be.eql(true);
                     done();
                 });
             });
-            it('should return station', function (done) {
+            it('should return null if no this station', function (done) {
+                var lesseeID = "lesseeID";
+                var stationID = "noStationID";
+                repository.getStationByID(lesseeID, stationID, function (err, station) {
+                    _.isNull(station).should.be.eql(true);
+                    done();
+                });
+            });
+            it('should return station if success', function (done) {
+                var lesseeID = "lesseeID";
                 var stationID = "stationID";
-                repository.getStationByID(stationID, function (err, station) {
+                repository.getStationByID(lesseeID, stationID, function (err, station) {
                     station.stationID.should.be.eql('stationID');
                     station.stationInfo.stationName.should.be.eql('stationName');
                     station.lesseeID.should.be.eql('lesseeID');
@@ -89,18 +99,28 @@ describe('station repository MongoDB use case test', function () {
             });
         });
     });
-    describe('#delStation(stationID, callback)//callback(err,isSuccess)', function () {
+    describe('#delStation(lesseeID, stationID, callback)//callback(err,isSuccess)', function () {
         context('remove an account of id', function () {
             it('should return null if no this account', function (done) {
-                var stationID = "noStation";
-                repository.delStation(stationID, function (err, isSuccess) {
-                    _.isNull(isSuccess).should.be.eql(true);
+                var lesseeID = "noLesseeID";
+                var stationID = "stationID";
+                repository.delStation(lesseeID, stationID, function (err, isSuccess) {
+                    isSuccess.should.be.eql(false);
+                    done();
+                });
+            });
+            it('should return null if no this account', function (done) {
+                var lesseeID = "lesseeID";
+                var stationID = "noStationID";
+                repository.delStation(lesseeID, stationID, function (err, isSuccess) {
+                    isSuccess.should.be.eql(false);
                     done();
                 });
             });
             it('should return true if del one station', function (done) {
+                var lesseeID = "lesseeID";
                 var stationID = "stationID";
-                repository.delStation(stationID, function (err, isSuccess) {
+                repository.delStation(lesseeID, stationID, function (err, isSuccess) {
                     isSuccess.should.be.eql(true);
                     done();
                 });
