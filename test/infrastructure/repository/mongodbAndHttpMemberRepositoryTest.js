@@ -28,7 +28,7 @@ describe('member repository MongoDB and http use case test', function () {
                });
             });
             it('should return member if http is ok', function (done) {
-                var mockRequest = function (options, callback) {
+                var mockRequest = function (options, callback) {//TODO 放在before里
                     callback(null, {}, {
                         errcode: 0,
                         errcodemsg: "ok",

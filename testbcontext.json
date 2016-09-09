@@ -25,6 +25,10 @@
       "func": "lib.application.service.roleAndPermissionService",
       "props": [
         {
+          "name": "httpUrl",
+          "value": "http://?taglist"
+        },
+        {
           "name": "__permissionRepository__",
           "ref": "mockPermissionRepository"
         },

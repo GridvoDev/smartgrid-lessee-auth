@@ -14,11 +14,11 @@ describe('lessees route use case test', function () {
     var app;
     var server;
     before(function (done) {
-        async.parallel([//TODO waterfall 改过来
+        async.waterfall([
             function (callback) {
                 app = express();
                 app.use(bodyParser.json());
-                app.use(bodyParser.urlencoded({ extended: false }));
+                app.use(bodyParser.urlencoded({extended: false}));
                 app.use('/', lesseeRouter);
                 server = app.listen(3001, callback);
             },
@@ -27,10 +27,10 @@ describe('lessees route use case test', function () {
                 bearcat.createApp([bearcatContextPath]);
                 bearcat.start(function () {
                     app.set('bearcat', bearcat);
-                    callback(null, null);
+                    callback(null);
                 });
             }
-        ], function (err, results) {
+        ], function (err) {
             if (err) {
                 done(err);
                 return;
@@ -144,7 +144,7 @@ describe('lessees route use case test', function () {
             });
         });
     });
-    describe('#put:/lessees/:lesseeID/stations/:stationID\n' +
+    describe('#post:/lessees/:lesseeID/stations/:stationID/members\n' +
         'input:{memberID: ""}\n' +
         'output:{errcode:0,errmsg:"",isSuccess:""}', function () {
         context('request for assign member to lessee station', function () {
@@ -155,7 +155,7 @@ describe('lessees route use case test', function () {
                     memberID: "memberID"
                 };
                 request(server)
-                    .put(`/lessees/${lesseeID}/stations/${stationID}`)
+                    .post(`/lessees/${lesseeID}/stations/${stationID}/members`)
                     .send(body)
                     .expect(200)
                     .expect('Content-Type', /json/)
@@ -175,7 +175,7 @@ describe('lessees route use case test', function () {
                     memberID: "memberID"
                 };
                 request(server)
-                    .put(`/lessees/${lesseeID}/stations/${stationID}`)
+                    .post(`/lessees/${lesseeID}/stations/${stationID}/members`)
                     .send(body)
                     .expect(200)
                     .expect('Content-Type', /json/)
@@ -188,49 +188,28 @@ describe('lessees route use case test', function () {
                         done();
                     });
             });
-            // it('should response message with errcode:OK and isSuccesss:true if success', function (done) {
-            //     var lesseeID = "lesseeID";
-            //     var stationID = "stationID";
-            //     var body = {
-            //         memberID: "memberID"
-            //     };
-            //     var lesseeService = bearcat.getBean('lesseeService');
-            //     var mockRequest = function (options, callback) {
-            //         callback(null, {}, {
-            //             errcode: 0,
-            //             errcodemsg: "ok",
-            //             userInfo: {
-            //                 corpID: "corpID",
-            //                 userID: "userID",
-            //                 username: "username",
-            //                 tags: [{
-            //                     tagID: 'tagsID1',
-            //                     tagName: "tagsName1"
-            //                 }, {
-            //                     tagID: 'tagsID2',
-            //                     tagName: "tagsName2"
-            //                 }],
-            //                 state: "follow"
-            //             }
-            //         });
-            //     };
-            //     muk(lesseeService, "__memberRepository__.__httpRequest__", mockRequest);
-            //     request(server)
-            //         .put(`/lessees/${lesseeID}/stations/${stationID}`)
-            //         .send(body)
-            //         .expect(200)
-            //         .expect('Content-Type', /json/)
-            //         .end(function (err, res) {
-            //             if (err) {
-            //                 done(err);
-            //                 return;
-            //             }
-            //             res.body.errcode.should.be.eql(errCodeTable.OK.errCode);
-            //             res.body.isSuccess.should.be.eql(true);
-            //             muk.restore();
-            //             done();
-            //         });
-            // });
+            it('should response message with errcode:OK and isSuccesss:true if success', function (done) {
+                var lesseeID = "lesseeID";
+                var stationID = "stationID";
+                var body = {
+                    memberID: "memberID"
+                };
+                request(server)
+                    .post(`/lessees/${lesseeID}/stations/${stationID}/members`)
+                    .send(body)
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+                        res.body.errcode.should.be.eql(errCodeTable.OK.errCode);
+                        res.body.isSuccess.should.be.eql(true);
+                        muk.restore();
+                        done();
+                    });
+            });
         });
     });
     describe('#delete:/lessees/:lesseeID/stations/:stationID\n' +
@@ -288,17 +267,17 @@ describe('lessees route use case test', function () {
             });
         });
     });
-    describe('#put:/lessees/:lesseeID\n' +
+    describe('#post:/lessees/:lesseeID/change-active-state\n' +
         'input:{isActived: true}\n' +
         'output:{errcode:0,errmsg:"",isSuccess:""}', function () {
         context('request for change lessee activeState', function () {
-            it('should response message with errcode:FAIL if no a such station', function (done) {
+            it('should response message with errcode:FAIL if no a such lessee', function (done) {
                 var lesseeID = "noLesseeID";
                 var body = {
                     isActived: true
                 };
                 request(server)
-                    .put(`/lessees/${lesseeID}`)
+                    .post(`/lessees/${lesseeID}/change-active-state`)
                     .send(body)
                     .expect(200)
                     .expect('Content-Type', /json/)
@@ -317,7 +296,7 @@ describe('lessees route use case test', function () {
                     isActived: true
                 };
                 request(server)
-                    .put(`/lessees/${lesseeID}`)
+                    .post(`/lessees/${lesseeID}/change-active-state`)
                     .send(body)
                     .expect(200)
                     .expect('Content-Type', /json/)
@@ -337,33 +316,7 @@ describe('lessees route use case test', function () {
         async.parallel([
             function (callback) {
                 server.close(callback);
-            },
-            function (callback) {
-                var dbTemp;
-                async.waterfall([
-                    function (cb) {
-                        MongoClient.connect("mongodb://localhost:27017/TestGLesseeAuthentication", cb);
-                    },
-                    function (db, cb) {
-                        dbTemp = db;
-                        dbTemp.collection('station').drop(cb);
-                    },
-                    function (response, cb) {
-                        dbTemp.collection('lessee').drop(cb);
-                    },
-                    function (response, cb) {
-                        dbTemp.close(cb);
-                    }
-                ], function (err, rslt) {
-                    if (err) {
-                        callback(err, rslt);
-                        dbTemp.close();
-                        return;
-                    }
-                    callback(null, rslt);
-                });
-            }
-        ], function (err, results) {
+            }], function (err, results) {
             if (err) {
                 done(err);
                 return;

@@ -130,10 +130,27 @@ describe('roleAndPermission service use case test', function () {
     describe('#obtainAllRole(callback)//callback(err,roleDatas)', function () {
         context('obtain all role', function () {
             it('success', function (done) {
+                var mockRequest = function (options, callback) {
+                    callback(null, {}, {
+                        errcode: 0,
+                        errcodemsg: "ok",
+                        taglist: [{
+                            tagID: 'tagsID1',
+                            tagName: "tagsName1"
+                        }, {
+                            tagID: 'tagsID2',
+                            tagName: "tagsName2"
+                        }]
+                    });
+                };
+                muk(service, "__httpRequest__", mockRequest);
                 service.obtainAllRole(function (err, roleDatas) {
-                    roleDatas.length.should.be.eql(1);
+                    roleDatas.length.should.be.eql(2);
                     done();
                 });
+            });
+            after(function () {
+                muk.restore();
             });
         });
     });

@@ -180,7 +180,7 @@ describe('lessee service use case test', function () {
             it('success', function (done) {
                 var memberID = "memberID";
                 service.obtainMemberDutyStations(memberID, function (err, stationDatas) {
-                    stationDatas.should.be.eql([{stationID: "stationID", stationName: "stationName"}]);
+                    stationDatas.length.should.be.eql(1);
                     done();
                 });
             });

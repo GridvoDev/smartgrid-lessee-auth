@@ -4,21 +4,11 @@
   "beans": [
     {
       "id": "lesseeService",
-      "func": "lib.application.service.lesseeService",
-      "props": [
-        {
-          "name": "__lesseeRepository__",
-          "ref": "lesseeRepository"
-        },
-        {
-          "name": "__stationRepository__",
-          "ref": "stationRepository"
-        },
-        {
-          "name": "__memberRepository__",
-          "ref": "memberRepository"
-        }
-      ]
+      "func": "test.mock.application.service.lesseeService"
+    },
+    {
+      "id": "roleAndPermissionService",
+      "func": "test.mock.application.service.roleAndPermissionService"
     },
     {
       "id": "lesseeRepository",
