@@ -72,16 +72,6 @@ describe('role repository MongoDB and http use case test', function () {
             });
         });
     });
-    describe('#getAllRole(callback)//callback(err,roles)', function () {
-        context('get roles by ids', function () {
-            it('success', function (done) {
-                repository.getAllRole(function (err, roles) {
-                    roles.length.should.be.eql(1);
-                    done();
-                });
-            });
-        });
-    });
     after(function (done) {
         MongoClient.connect("mongodb://localhost:27017/TestGLesseeAuthentication", function (err, db) {
             if (err) {

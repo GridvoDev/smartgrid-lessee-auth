@@ -5,7 +5,6 @@ var should = require('should');
 var request = require('supertest');
 var express = require('express');
 var bodyParser = require('body-parser');
-var MongoClient = require('mongodb').MongoClient;
 var roleAndPermissionRouter = require('../../../lib/express/routes/roleAndPermission.js');
 var errCodeTable = require('../../../lib/util/errCode.js');
 
@@ -82,7 +81,7 @@ describe('roleAndPermission route use case test', function () {
     describe('#get:/permissions\n' +
         'output:{errcode:0,errmsg:"",stationID:""}', function () {
         context('request for obtain permissions', function () {
-            it('should response message with errcode:OK and permissionData if success', function (done) {
+            it('should response message with errcode:OK and permissionDatas if success', function (done) {
                 request(server)
                     .get(`/permissions`)
                     .expect(200)
@@ -93,7 +92,7 @@ describe('roleAndPermission route use case test', function () {
                             return;
                         }
                         res.body.errcode.should.be.eql(errCodeTable.OK.errCode);
-                        res.body.permissionData.length.should.be.eql(1);
+                        res.body.permissionDatas.length.should.be.eql(1);
                         done();
                     });
             });
@@ -122,45 +121,129 @@ describe('roleAndPermission route use case test', function () {
                         done();
                     });
             });
-            // it('should response message with errcode:FAIL if no a such permission', function (done) {
-            //     var roleID = "roleID";
-            //     var body = {
-            //         permissionIDs: []
-            //     };
-            //     request(server)
-            //         .post(`/roles/${roleID}/permissions`)
-            //         .send(body)
-            //         .expect(200)
-            //         .expect('Content-Type', /json/)
-            //         .end(function (err, res) {
-            //             if (err) {
-            //                 done(err);
-            //                 return;
-            //             }
-            //             res.body.errcode.should.be.eql(errCodeTable.FAIL.errCode);
-            //             done();
-            //         });
-            // });
-            // it('should response message with errcode:OK and isSuccesss:true if success', function (done) {
-            //     var roleID = "roleID";
-            //     var body = {
-            //         permissionIDs: ["permissionID"]
-            //     };
-            //     request(server)
-            //         .put(`/roles/${roleID}`)
-            //         .send(body)
-            //         .expect(200)
-            //         .expect('Content-Type', /json/)
-            //         .end(function (err, res) {
-            //             if (err) {
-            //                 done(err);
-            //                 return;
-            //             }
-            //             res.body.errcode.should.be.eql(errCodeTable.OK.errCode);
-            //             res.body.isSuccess.should.be.eql(true);
-            //             done();
-            //         });
-            // });
+            it('should response message with errcode:FAIL if no a such permission', function (done) {
+                var roleID = "roleID";
+                var body = {
+                    permissionIDs: null
+                };
+                request(server)
+                    .post(`/roles/${roleID}/permissions`)
+                    .send(body)
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+                        res.body.errcode.should.be.eql(errCodeTable.FAIL.errCode);
+                        done();
+                    });
+            });
+            it('should response message with errcode:OK and isSuccesss:true if success', function (done) {
+                var roleID = "roleID";
+                var body = {
+                    permissionIDs: ["permissionID"]
+                };
+                request(server)
+                    .post(`/roles/${roleID}/permissions`)
+                    .send(body)
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+                        res.body.errcode.should.be.eql(errCodeTable.OK.errCode);
+                        res.body.isSuccess.should.be.eql(true);
+                        done();
+                    });
+            });
+        });
+    });
+    describe('#delete:/roles/:roleID/permissions\n' +
+        'input:{permissionIDs: []}\n' +
+        'output:{errcode:0,errmsg:"",isSuccess:""}', function () {
+        context('request for cancle permission of role', function () {
+            it('should response message with errcode:FAIL if no a such role', function (done) {
+                var roleID = "noRoleID";
+                var body = {
+                    permissionIDs: ["permissionID"]
+                };
+                request(server)
+                    .del(`/roles/${roleID}/permissions`)
+                    .send(body)
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+                        res.body.errcode.should.be.eql(errCodeTable.FAIL.errCode);
+                        done();
+                    });
+            });
+            it('should response message with errcode:FAIL if no a such permission', function (done) {
+                var roleID = "roleID";
+                var body = {
+                    permissionIDs: null
+                };
+                request(server)
+                    .del(`/roles/${roleID}/permissions`)
+                    .send(body)
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+                        res.body.errcode.should.be.eql(errCodeTable.FAIL.errCode);
+                        done();
+                    });
+            });
+            it('should response message with errcode:OK and isSuccesss:true if success', function (done) {
+                var roleID = "roleID";//TODO permissions本身就是一个参数，也就是permissionIDs 要不要将URL改成`/roles/${roleID}/${permissions}`
+                var body = {
+                    permissionIDs: ["permissionID"]
+                };
+                request(server)
+                    .del(`/roles/${roleID}/permissions`)
+                    .send(body)
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+                        res.body.errcode.should.be.eql(errCodeTable.OK.errCode);
+                        res.body.isSuccess.should.be.eql(true);
+                        done();
+                    });
+            });
+        });
+    });
+    describe('#get:/roles\n' +
+        'output:{errcode:0,errmsg:"",stationID:""}', function () {
+        context('request for obtain roles', function () {
+            it('should response message with errcode:OK and roleDatas if success', function (done) {
+                request(server)
+                    .get(`/roles`)
+                    .expect(200)
+                    .expect('Content-Type', /json/)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                            return;
+                        }
+                        res.body.errcode.should.be.eql(errCodeTable.OK.errCode);
+                        res.body.roleDatas.length.should.be.eql(1);
+                        done();
+                    });
+            });
         });
     });
     describe('#delete:/permissions/:permissionID\n' +
@@ -249,30 +332,7 @@ describe('roleAndPermission route use case test', function () {
         async.parallel([
             function (callback) {
                 server.close(callback);
-            },
-            function (callback) {
-                var dbTemp;
-                async.waterfall([
-                    function (cb) {
-                        MongoClient.connect("mongodb://localhost:27017/TestGLesseeAuthentication", cb);
-                    },
-                    function (db, cb) {
-                        dbTemp = db;
-                        dbTemp.collection('permission').drop(cb);
-                    },
-                    function (response, cb) {
-                        dbTemp.close(cb);
-                    }
-                ], function (err, rslt) {
-                    if (err) {
-                        callback(err, rslt);
-                        dbTemp.close();
-                        return;
-                    }
-                    callback(null, rslt);
-                });
-            }
-        ], function (err, results) {
+            }], function (err, results) {
             if (err) {
                 done(err);
                 return;

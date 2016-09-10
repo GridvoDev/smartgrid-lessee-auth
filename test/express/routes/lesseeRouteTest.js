@@ -5,8 +5,6 @@ var should = require('should');
 var request = require('supertest');
 var express = require('express');
 var bodyParser = require('body-parser');
-var muk = require('muk');
-var MongoClient = require('mongodb').MongoClient;
 var lesseeRouter = require('../../../lib/express/routes/lessee.js');
 var errCodeTable = require('../../../lib/util/errCode.js');
 
@@ -206,7 +204,6 @@ describe('lessees route use case test', function () {
                         }
                         res.body.errcode.should.be.eql(errCodeTable.OK.errCode);
                         res.body.isSuccess.should.be.eql(true);
-                        muk.restore();
                         done();
                     });
             });

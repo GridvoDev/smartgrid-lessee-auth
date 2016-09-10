@@ -11,66 +11,8 @@
       "func": "test.mock.application.service.roleAndPermissionService"
     },
     {
-      "id": "lesseeRepository",
-      "func": "lib.infrastructure.repository.mongodbAndHttpLesseeRepository",
-      "props": [
-        {
-          "name": "dBUrl",
-          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
-        }
-      ]
-    },
-    {
-      "id": "stationRepository",
-      "func": "lib.infrastructure.repository.mongodbStationRepository",
-      "props": [
-        {
-          "name": "dBUrl",
-          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
-        }
-      ]
-    },
-    {
-      "id": "memberRepository",
-      "func": "lib.infrastructure.repository.mongodbAndHttpMemberRepository",
-      "props": [
-        {
-          "name": "dBUrl",
-          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
-        },
-        {
-          "name": "httpUrl",
-          "value": "http://?user_id=${memberID}"
-        },
-        {
-          "name": "__roleRepository__",
-          "ref": "roleRepository"
-        }
-      ]
-    },
-    {
-      "id": "roleRepository",
-      "func": "lib.infrastructure.repository.mongodbAndHttpRoleRepository",
-      "props": [
-        {
-          "name": "dBUrl",
-          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
-        },
-        {
-          "name": "__permissionRepository__",
-          "ref": "permissionRepository"
-        }
-      ]
-    },
-    {
-      "id": "permissionRepository",
-      "func": "lib.infrastructure.repository.mongodbAndHttpPermissionRepository",
-      "props": [
-        {
-          "name": "dBUrl",
-          "value": "mongodb://localhost:27017/TestGLesseeAuthentication"
-        }
-      ]
+      "id": "authService",
+      "func": "test.mock.application.service.authService"
     }
   ]
 }
