@@ -1,0 +1,27 @@
+version: '2'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+  smartgrid-lessee-auth:
+    build: .
+    image: smartgrid-lessee-auth:latest
+    container_name: smartgrid-lessee-auth
+    depends_on:
+     - mongodb
+    environment:
+      MONGODB_SERVICE_HOST: mongodb
+      MONGODB_SERVICE_PORT: 27017
+  unittest:
+    image: node:latest
+    container_name: unittest
+    volumes_from:
+     - smartgrid-lessee-auth
+    depends_on:
+     - mongodb
+     - smartgrid-lessee-auth
+    environment:
+      MONGODB_SERVICE_HOST: mongodb
+      MONGODB_SERVICE_PORT: 27017
+    working_dir: /home/smartgrid-lessee-auth
+    command: npm test

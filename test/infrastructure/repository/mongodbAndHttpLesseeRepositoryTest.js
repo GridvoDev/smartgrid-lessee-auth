@@ -11,7 +11,7 @@ describe('lessee repository MongoDB and http use case test', function () {
     var repository;
 
     before(function (done) {
-        var contextPath = require.resolve('../../../testbcontext.json');
+        var contextPath = require.resolve('../../../unittest_testbcontext.json');
         bearcat.createApp([contextPath]);
         bearcat.start(function () {//TODO 1、bearcat.stop？？？ 2、lesseeInfo应该从微信来，这个还没改过来！
             repository = bearcat.getBean('lesseeRepository');

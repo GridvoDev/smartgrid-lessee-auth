@@ -21,7 +21,7 @@ describe('auth route use case test', function () {
                 server = app.listen(3001, callback);
             },
             function (callback) {
-                var bearcatContextPath = require.resolve("../../../ctestbcontext.json");
+                var bearcatContextPath = require.resolve("../../../unittest_ctestbcontext.json");
                 bearcat.createApp([bearcatContextPath]);
                 bearcat.start(function () {
                     app.set('bearcat', bearcat);
