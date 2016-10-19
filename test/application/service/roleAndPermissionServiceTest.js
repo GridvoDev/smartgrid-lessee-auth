@@ -8,7 +8,7 @@ describe('roleAndPermission service use case test', function () {
     var service;
 
     before(function (done) {
-        var contextPath = require.resolve('../../../unittest_testbcontext.json');
+        var contextPath = require.resolve('../../../unittest_application_bcontext.json');
         bearcat.createApp([contextPath]);
         bearcat.start(function () {
             service = bearcat.getBean('roleAndPermissionService');

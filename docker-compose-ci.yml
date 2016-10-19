@@ -5,7 +5,7 @@ services:
     container_name: mongodb
   smartgrid-lessee-auth:
     build: .
-    image: smartgrid-lessee-auth:latest
+    image: smartgrid-lessee-auth:dev
     container_name: smartgrid-lessee-auth
     depends_on:
      - mongodb

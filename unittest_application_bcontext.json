@@ -1,5 +1,5 @@
 {
-  "name": "GridvoLATestDI",
+  "name": "smartgridvo-lessee-auth-unittest-application-di",
   "scan": "lib",
   "beans": [
     {

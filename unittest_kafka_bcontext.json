@@ -1,0 +1,30 @@
+{
+  "name": "smartgridvo-lessee-auth-unittest-kafka-di",
+  "scan": "lib",
+  "beans": [
+    {
+      "id": "corpAuthSmartStationSuiteTopicConsumer",
+      "func": "lib.kafka.consumer.corpAuthSmartStationSuiteTopicConsumer",
+      "props": [
+        {
+          "name": "__lesseeService__",
+          "ref": "mockLesseeService"
+        }
+      ]
+    },
+    {
+      "id": "corpCancelAuthSmartStationSuiteTopicConsumer",
+      "func": "lib.kafka.consumer.corpCancelAuthSmartStationSuiteTopicConsumer",
+      "props": [
+        {
+          "name": "__lesseeService__",
+          "ref": "mockLesseeService"
+        }
+      ]
+    },
+    {
+      "id": "mockLesseeService",
+      "func": "test.mock.application.service.lesseeService"
+    }
+  ]
+}

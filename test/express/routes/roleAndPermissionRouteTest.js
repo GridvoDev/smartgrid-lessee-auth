@@ -6,7 +6,7 @@ var request = require('supertest');
 var express = require('express');
 var bodyParser = require('body-parser');
 var roleAndPermissionRouter = require('../../../lib/express/routes/roleAndPermission.js');
-var errCodeTable = require('../../../lib/util/errCode.js');
+var errCodeTable = require('../../../lib/express/util/errCode.js');
 
 describe('roleAndPermission route use case test', function () {
     var app;
@@ -21,7 +21,7 @@ describe('roleAndPermission route use case test', function () {
                 server = app.listen(3001, callback);
             },
             function (callback) {
-                var bearcatContextPath = require.resolve("../../../unittest_ctestbcontext.json");
+                var bearcatContextPath = require.resolve("../../../unittest_express_bcontext.json");
                 bearcat.createApp([bearcatContextPath]);
                 bearcat.start(function () {
                     app.set('bearcat', bearcat);

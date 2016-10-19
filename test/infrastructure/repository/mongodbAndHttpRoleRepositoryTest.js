@@ -11,7 +11,7 @@ describe('role repository MongoDB and http use case test', function () {
     var repository;
 
     before(function (done) {
-        var contextPath = require.resolve('../../../unittest_testbcontext.json');
+        var contextPath = require.resolve('../../../unittest_application_bcontext.json');
         bearcat.createApp([contextPath]);
         bearcat.start(function () {
             repository = bearcat.getBean('roleRepository');
