@@ -3,8 +3,8 @@
   "scan": "lib",
   "beans": [
     {
-      "id": "corpAuthSmartStationSuiteTopicConsumer",
-      "func": "lib.kafka.consumer.corpAuthSmartStationSuiteTopicConsumer",
+      "id": "corpAuthSmartgridSuiteTopicConsumer",
+      "func": "lib.kafka.consumer.corpAuthSmartgridSuiteTopicConsumer",
       "props": [
         {
           "name": "__lesseeService__",
@@ -13,8 +13,8 @@
       ]
     },
     {
-      "id": "corpCancelAuthSmartStationSuiteTopicConsumer",
-      "func": "lib.kafka.consumer.corpCancelAuthSmartStationSuiteTopicConsumer",
+      "id": "corpCancelAuthSmartgridSuiteTopicConsumer",
+      "func": "lib.kafka.consumer.corpCancelAuthSmartgridSuiteTopicConsumer",
       "props": [
         {
           "name": "__lesseeService__",

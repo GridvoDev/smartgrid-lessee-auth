@@ -47,7 +47,6 @@ describe('lessee repository MongoDB and http use case test', function () {
                 var lesseeID = "lesseeID";
                 repository.getLesseeByID(lesseeID, function (err, lessee) {
                     lessee.lesseeID.should.be.eql("lesseeID");
-                    //lessee.lesseeInfo.should.be.eql({ name: "the lessee name" });
                     lessee.isActived.should.be.eql(true);
                     done();
                 });
@@ -55,7 +54,9 @@ describe('lessee repository MongoDB and http use case test', function () {
         });
     });
     after(function (done) {
-        MongoClient.connect("mongodb://localhost:27017/TestGLesseeAuthentication", function (err, db) {
+        var MONGODB_SERVICE_HOST = process.env.MONGODB_SERVICE_HOST ? process.env.MONGODB_SERVICE_HOST : "127.0.0.1";
+        var MONGODB_SERVICE_PORT = process.env.MONGODB_SERVICE_PORT ? process.env.MONGODB_SERVICE_PORT : "27017";
+        MongoClient.connect(`mongodb://${MONGODB_SERVICE_HOST}:${MONGODB_SERVICE_PORT}/TestGLesseeAuthentication`, function (err, db) {
             if (err) {
                 done(err);
                 return;

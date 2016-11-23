@@ -5,7 +5,7 @@ var should = require('should');
 var muk = require('muk');
 var bearcat = require('bearcat');
 
-describe('corp create auth topic consumer use case test', function () {
+describe('corp cancel auth topic consumer use case test', function () {
     var consumer;
     var producer;
     var producerClient;
@@ -19,8 +19,8 @@ describe('corp create auth topic consumer use case test', function () {
             producerClient = new kafka.Client(`${ZOOKEEPER_SERVICE_HOST}:${ZOOKEEPER_SERVICE_PORT}`);
             producer = new Producer(producerClient);
             producer.on('ready', function () {
-                producer.createTopics(['corp-auth-smart-station-suite'], true, (err, data)=> {
-                    producerClient.refreshMetadata(['corp-auth-smart-station-suite'], ()=> {
+                producer.createTopics(['corp-cancel-auth-smartgrid-suite'], true, (err, data)=> {
+                    producerClient.refreshMetadata(['corp-cancel-auth-smartgrid-suite'], ()=> {
                         done();
                     });
                 });
@@ -28,11 +28,11 @@ describe('corp create auth topic consumer use case test', function () {
             producer.on('error', (err)=> {
                 done(err);
             });
-            consumer = bearcat.getBean('corpAuthSmartStationSuiteTopicConsumer');
+            consumer = bearcat.getBean('corpCancelAuthSmartgridSuiteTopicConsumer');
         });
     });
     describe('#startConsume(callback)', function () {
-        context('start consume corp-create-auth topic', function () {
+        context('start consume corp-cancel-auth-smartgrid-suite topic', function () {
             it('should call lesseeService.changeLesseeActiveState methods when consumer this topic', function (done) {
                 var mockLesseeService = {};
                 mockLesseeService.changeLesseeActiveState = ()=> {
@@ -45,7 +45,7 @@ describe('corp create auth topic consumer use case test', function () {
                     dateTime: new Date()
                 };
                 producer.send([{
-                    topic: "corp-auth-smart-station-suite",
+                    topic: "corp-cancel-auth-smartgrid-suite",
                     messages: [JSON.stringify(activeStateData)]
                 }], ()=> {
                 });

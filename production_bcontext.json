@@ -1,0 +1,80 @@
+{
+  "name": "smartgridvo-lessee-auth-unittest-kafka-di",
+  "scan": "lib",
+  "beans": [
+    {
+      "id": "corpAuthSmartgridSuiteTopicConsumer",
+      "func": "lib.kafka.consumer.corpAuthSmartgridSuiteTopicConsumer",
+      "props": [
+        {
+          "name": "__lesseeService__",
+          "ref": "lesseeService"
+        }
+      ]
+    },
+    {
+      "id": "corpCancelAuthSmartgridSuiteTopicConsumer",
+      "func": "lib.kafka.consumer.corpCancelAuthSmartgridSuiteTopicConsumer",
+      "props": [
+        {
+          "name": "__lesseeService__",
+          "ref": "LesseeService"
+        }
+      ]
+    },
+    {
+      "id": "lesseeService",
+      "func": "lib.application.service.lesseeService",
+      "props": [
+        {
+          "name": "__lesseeRepository__",
+          "ref": "lesseeRepository"
+        },
+        {
+          "name": "__stationRepository__",
+          "ref": "stationRepository"
+        },
+        {
+          "name": "__memberRepository__",
+          "ref": "memberRepository"
+        }
+      ]
+    },
+    {
+      "id": "lesseeRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpLesseeRepository",
+    },
+    {
+      "id": "stationRepository",
+      "func": "lib.infrastructure.repository.mongodbStationRepository",
+    },
+    {
+      "id": "memberRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpMemberRepository",
+      "props": [
+        {
+          "name": "httpUrl",
+          "value": "http://?user_id=${memberID}"
+        },
+        {
+          "name": "__roleRepository__",
+          "ref": "roleRepository"
+        }
+      ]
+    },
+    {
+      "id": "roleRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpRoleRepository",
+      "props": [
+        {
+          "name": "__permissionRepository__",
+          "ref": "permissionRepository"
+        }
+      ]
+    },
+    {
+      "id": "permissionRepository",
+      "func": "lib.infrastructure.repository.mongodbAndHttpPermissionRepository",
+    }
+  ]
+}
