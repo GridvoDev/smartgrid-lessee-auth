@@ -15,8 +15,8 @@ RUN ["npm","install","kafka-node@0.5.8"]
 RUN ["npm","install","mongodb@2.1.18"]
 RUN ["npm","install","request@2.73.0"]
 RUN ["npm","install","underscore@1.8.3"]
-COPY ./app.js app.
-COPY ./lib libjs
+COPY ./app.js app.js
+COPY ./lib lib
 COPY ./test test
 COPY ./unittest_application_bcontext.json unittest_application_bcontext.json
 COPY ./unittest_express_bcontext.json unittest_express_bcontext.json
