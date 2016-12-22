@@ -22,7 +22,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
   smartgrid-lessee-auth:
     build: .
-    image: smartgrid-lessee-auth:dev
+    image: gridvo/smartgrid-lessee-auth:dev
     container_name: smartgrid-lessee-auth
     depends_on:
      - zookeeper
