@@ -33,7 +33,6 @@ bearcat.start(function () {
     });
     app = express();
 
-
 //中间件
 
     app.use(bodyParser.json());
